@@ -82,8 +82,48 @@ function getLocationWeather(lat, lon) {
                     localStorage.setItem('weatherData', JSON.stringify(weatherData));
                     localStorage.setItem('currentDayWeather', JSON.stringify(currentDayWeather))
 
-                    //CALL FUNCTIONS TO RENDER WEATHER FORECAST
+                    renderDailyForecast()
                 });
             }
         });
+}
+
+function renderDailyForecast() {
+    // Clear weather container before rendering
+    cityWeatherInfo.innerHTML = '';
+
+    // Loop through current day weather array
+    for (let currentDay of currentDayWeather) {
+        // Create city name element
+        const cityNameEl = document.createElement('h1');
+        cityNameEl.textContent = `${currentDay.city} (${currentDay.date})`;
+
+        // Create city temp element
+        const cityTempEl = document.createElement('p');
+        cityTempEl.textContent = `Temp: ${currentDay.temp} degrees C`;
+
+        // Create city wind element
+        const cityWindEl = document.createElement('p');
+        cityWindEl.textContent = `Wind: ${currentDay.wind} KPH`;
+
+        // Create city humidity element
+        const cityHumidityEl = document.createElement('p');
+        cityHumidityEl.textContent = `Humidity: ${currentDay.humidity}%`;
+
+        if (currentDay.desc === 'Clouds') {
+            const sunIcon = document.createElement('i');
+            sunIcon.className = 'fas fa-cloud fa-2x';
+            cityWeatherInfo.append(cityNameEl, sunIcon, cityTempEl, cityWindEl, cityHumidityEl);
+
+        } else {
+            const sunIcon = document.createElement('i');
+            sunIcon.className = 'fas fa-sun fa-2x';
+            cityWeatherInfo.append(cityNameEl, cityTempEl, cityWindEl, cityHumidityEl);
+        }
+
+        // Append elements
+        cityWeatherInfo.append(cityNameEl, cityTempEl, cityWindEl, cityHumidityEl);
+    }
+
+
 }
