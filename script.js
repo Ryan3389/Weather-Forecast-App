@@ -1,3 +1,4 @@
+//SELECTING HTML ELEMENTS
 const form = document.querySelector("form");
 const searchInput = document.getElementById('search');
 const countryInput = document.getElementById('country');
@@ -5,29 +6,36 @@ const forecastContainer = document.querySelector('.forecast-container');
 const cityWeatherInfo = document.querySelector('.city-weather-info')
 const cityBtnContainer = document.querySelector('.city-btn-container')
 const btnContainer = document.getElementById('btn-container')
+
+//API KEY
 const apiKey = 'a2778a07e9d9a3c87823acbb0ec3a7d3';
 
+//ARRAY TO HOLD WEATHER AND SEARCH HISTORY DATA
 let weatherData = [];
 let currentDayWeather = []
 let searchHistoryArr = []
 
+//EVENT LISTENERS
 btnContainer.addEventListener('click', clickHistoryBtn)
-
-
+//this is responsible for rendering local storage when the page loads
 document.addEventListener('DOMContentLoaded', function () {
     const storedSearchHistory = localStorage.getItem('searchHistory')
     const storedWeatherData = localStorage.getItem('weatherData');
     const storedDailyWeather = localStorage.getItem
         ('currentDayWeather')
-
-    if (storedWeatherData) {
-        weatherData = JSON.parse(storedWeatherData);
+    if (!storedWeatherData) {
+        cityWeatherInfo.innerHTML = 'No weather to show. Enter your location to see your weather'
+    } else {
+        weatherData = JSON.parse(storedWeatherData)
         renderForecast();
     }
-    if (storedDailyWeather) {
+    if (!storedDailyWeather) {
+        forecastContainer.innerHTML = "Please enter your location"
+    } else {
         currentDayWeather = JSON.parse(storedDailyWeather)
         renderDailyForecast()
     }
+
     if (storedSearchHistory) {
         searchHistoryArr = JSON.parse(storedSearchHistory)
         renderSearchHistory()
@@ -35,9 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })
 
-
 form.addEventListener('submit', weatherForm);
 
+//form event listener
 function weatherForm(e) {
     e.preventDefault();
     const city = searchInput.value;
@@ -55,6 +63,8 @@ function weatherForm(e) {
     countryInput.value = '';
 }
 
+//SEARCH HISTORY
+//save searh history
 function saveSearchHistory(location) {
     if (!searchHistoryArr.includes(location)) {
         searchHistoryArr.push(location)
@@ -64,7 +74,7 @@ function saveSearchHistory(location) {
     localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr))
     renderSearchHistory()
 }
-
+//render search history on the screen
 function renderSearchHistory() {
     cityBtnContainer.innerHTML = ''
 
@@ -78,7 +88,7 @@ function renderSearchHistory() {
 
     }
 }
-
+//making search buttons clickable
 function clickHistoryBtn(e) {
     const targetedCity = e.target.getAttribute('data-city');
     if (targetedCity) {
@@ -86,7 +96,7 @@ function clickHistoryBtn(e) {
     }
 
 }
-
+//searching weather based on btn clicked
 function searchHistoryLocation(city) {
     const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
 
@@ -101,7 +111,7 @@ function searchHistoryLocation(city) {
     })
 }
 
-
+//convert city input to latitude and longitude
 function locationCoordinates(cityLocation, countryLocation) {
     const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityLocation},${countryLocation}&appid=${apiKey}`;
 
@@ -117,7 +127,7 @@ function locationCoordinates(cityLocation, countryLocation) {
         });
 }
 
-
+//pass coodinates above to retrieve weather
 function getLocationWeather(lat, lon) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
@@ -125,12 +135,12 @@ function getLocationWeather(lat, lon) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-
+                    //returning weather matching certain times
                     const dailyForecast = data.list.filter(function (item) {
                         return item.dt_txt.includes('12:00:00')
                     })
                     const dailyWeather = [data]
-                    //daily forecast
+                    //filtering through weather t get current day weather
                     currentDayWeather = dailyWeather.map(function (item) {
                         return {
                             city: item.city.name,
@@ -152,7 +162,7 @@ function getLocationWeather(lat, lon) {
                     }));
 
 
-
+                    //setting data into local storage
                     localStorage.setItem('weatherData', JSON.stringify(weatherData));
                     localStorage.setItem('currentDayWeather', JSON.stringify(currentDayWeather))
 
@@ -209,27 +219,29 @@ function renderDailyForecast() {
 }
 
 
-
+//render weather forecast
 function renderForecast() {
-
+    //avoid duplicates from rendering
     forecastContainer.innerHTML = '';
 
     for (let weather of weatherData) {
+        //create div
         const weatherDiv = document.createElement('div');
         weatherDiv.classList.add('weather-box');
-
+        //create dateEl
         const dateEl = document.createElement('h3');
         dateEl.textContent = weather.date;
-
+        //create temp paragraph
         const tempPara = document.createElement('p');
         tempPara.textContent = `Temp: ${weather.temp} degrees, C`;
-
+        //create wind element
         const windPara = document.createElement('p');
         windPara.textContent = `Wind: ${weather.wind} KPH`;
-
+        //create humidity element
         const humidPara = document.createElement('p');
         humidPara.textContent = `Humidity: ${weather.humidity}%`;
 
+        //rendering out font awesome icons based on the current weather 
         if (weather.desc === 'Clouds') {
             const iconDiv = document.createElement('div');
             iconDiv.classList.add('icon-container')
@@ -259,8 +271,5 @@ function renderForecast() {
             forecastContainer.append(weatherDiv);
             weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
         }
-
-
-
     }
 }
