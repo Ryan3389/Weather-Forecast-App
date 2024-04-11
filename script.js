@@ -1,4 +1,3 @@
-//Selecting html elements
 const form = document.querySelector("form");
 const searchInput = document.getElementById('search');
 const countryInput = document.getElementById('country');
@@ -6,17 +5,17 @@ const forecastContainer = document.querySelector('.forecast-container');
 const cityWeatherInfo = document.querySelector('.city-weather-info')
 const cityBtnContainer = document.querySelector('.city-btn-container')
 const btnContainer = document.getElementById('btn-container')
-//api key
 const apiKey = 'a2778a07e9d9a3c87823acbb0ec3a7d3';
 
 let weatherData = [];
 let currentDayWeather = []
 let searchHistoryArr = []
 
-//event listeners
-form.addEventListener('submit', weatherForm);
+btnContainer.addEventListener('click', clickHistoryBtn)
+
 
 document.addEventListener('DOMContentLoaded', function () {
+    const storedSearchHistory = localStorage.getItem('searchHistory')
     const storedWeatherData = localStorage.getItem('weatherData');
     const storedDailyWeather = localStorage.getItem
         ('currentDayWeather')
@@ -29,20 +28,16 @@ document.addEventListener('DOMContentLoaded', function () {
         currentDayWeather = JSON.parse(storedDailyWeather)
         renderDailyForecast()
     }
+    if (storedSearchHistory) {
+        searchHistoryArr = JSON.parse(storedSearchHistory)
+        renderSearchHistory()
+    }
 
 })
 
-function saveSearchHistory(location) {
-    if (!searchHistoryArr.includes(location)) {
-        searchHistoryArr.push(location)
-    }
 
+form.addEventListener('submit', weatherForm);
 
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr))
-}
-
-
-//function to handle form submission
 function weatherForm(e) {
     e.preventDefault();
     const city = searchInput.value;
@@ -50,6 +45,7 @@ function weatherForm(e) {
 
     if (city) {
         locationCoordinates(city, country);
+        saveSearchHistory(city)
 
     } else {
         alert("Enter location to proceed");
@@ -58,6 +54,53 @@ function weatherForm(e) {
     searchInput.value = '';
     countryInput.value = '';
 }
+
+function saveSearchHistory(location) {
+    if (!searchHistoryArr.includes(location)) {
+        searchHistoryArr.push(location)
+    }
+
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr))
+    renderSearchHistory()
+}
+
+function renderSearchHistory() {
+    cityBtnContainer.innerHTML = ''
+
+    for (let history of searchHistoryArr) {
+        const searchHistoryBtn = document.createElement("button")
+        searchHistoryBtn.classList.add('city-btn')
+        searchHistoryBtn.textContent = history
+        searchHistoryBtn.setAttribute('data-city', history);
+
+        cityBtnContainer.append(searchHistoryBtn)
+
+    }
+}
+
+function clickHistoryBtn(e) {
+    const targetedCity = e.target.getAttribute('data-city');
+    if (targetedCity) {
+        searchHistoryLocation(targetedCity)
+    }
+
+}
+
+function searchHistoryLocation(city) {
+    const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+
+    fetch(apiUrl).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (data) {
+                const longitude = data[0].lon
+                const latitude = data[0].lat
+                getLocationWeather(latitude, longitude)
+            })
+        }
+    })
+}
+
 
 function locationCoordinates(cityLocation, countryLocation) {
     const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityLocation},${countryLocation}&appid=${apiKey}`;
@@ -73,6 +116,7 @@ function locationCoordinates(cityLocation, countryLocation) {
             }
         });
 }
+
 
 function getLocationWeather(lat, lon) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
@@ -112,11 +156,17 @@ function getLocationWeather(lat, lon) {
                     localStorage.setItem('weatherData', JSON.stringify(weatherData));
                     localStorage.setItem('currentDayWeather', JSON.stringify(currentDayWeather))
 
+                    renderForecast();
                     renderDailyForecast()
+
+
                 });
             }
         });
 }
+
+
+
 
 function renderDailyForecast() {
     // Clear weather container before rendering
@@ -151,9 +201,66 @@ function renderDailyForecast() {
             cityWeatherInfo.append(cityNameEl, cityTempEl, cityWindEl, cityHumidityEl);
         }
 
-        // Append elements
+
         cityWeatherInfo.append(cityNameEl, cityTempEl, cityWindEl, cityHumidityEl);
     }
 
 
+}
+
+
+
+function renderForecast() {
+
+    forecastContainer.innerHTML = '';
+
+    for (let weather of weatherData) {
+        const weatherDiv = document.createElement('div');
+        weatherDiv.classList.add('weather-box');
+
+        const dateEl = document.createElement('h3');
+        dateEl.textContent = weather.date;
+
+        const tempPara = document.createElement('p');
+        tempPara.textContent = `Temp: ${weather.temp} degrees, C`;
+
+        const windPara = document.createElement('p');
+        windPara.textContent = `Wind: ${weather.wind} KPH`;
+
+        const humidPara = document.createElement('p');
+        humidPara.textContent = `Humidity: ${weather.humidity}%`;
+
+        if (weather.desc === 'Clouds') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const cloudIcon = document.createElement('i');
+            cloudIcon.className = 'fas fa-cloud fa-2x';
+
+            iconDiv.append(cloudIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+
+        } else if (weather.desc === 'Rain') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const rainIcon = document.createElement('i');
+            rainIcon.className = 'fas fa-raindrops fa-2x';
+
+            iconDiv.append(rainIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+        } else if (weather.desc === 'Clear') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const sunIcon = document.createElement('i');
+            sunIcon.className = 'fas fa-sun fa-2x';
+
+            iconDiv.append(sunIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+        }
+
+
+
+    }
 }

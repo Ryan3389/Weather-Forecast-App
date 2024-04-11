@@ -6,9 +6,9 @@
 }
 
 :root {
-    --background-color: rgba(22, 7, 65, 0.4);
-    --font-color: black;
-    --secondary-font-color: whitesmoke
+    --background-color: rgba(22, 7, 65, 0.6);
+    --font-color: whitesmoke;
+
 }
 
 body {
@@ -21,12 +21,19 @@ body {
 header {
     /* background-color: rgba(22, 7, 65, 0.713); */
     background-color: rgba(22, 7, 65, 0.7);
+
     text-align: center;
     color: whitesmoke;
     padding: 10px 15px;
-    color: var(--secondary-font-color);
+    color: var(--font-color)
 }
 
+/*MAIN*/
+main {
+    display: flex;
+}
+
+/*ASIDE - form + search btn container*/
 .search-city-container {
     width: 20vw;
     margin: 10px 15px;
@@ -75,6 +82,8 @@ form input {
     cursor: pointer;
 }
 
+/*SECTION - weather info styles*/
+
 .city-weather-info {
     border: 1px solid var(--background-color);
     border-radius: 10px;
@@ -85,6 +94,7 @@ form input {
     flex-direction: column;
     align-items: center;
     background-color: var(--background-color);
+    color: var(--font-color);
 
 }
 
@@ -144,5 +154,6 @@ button {
     border: none;
     padding: 10px 15px;
     font-size: 18px;
+    color: var(--font-color);
 
 }
