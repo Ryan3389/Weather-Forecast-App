@@ -11,5 +11,5 @@ The background image used in this project is from the website unsplash. This ima
 Throughout this project, I used Xpert Learning Assistant to help with debugging, also in areas where I was stuck. Overall, the code in this project was written completely on my own.
 
 ## Visuals
-LINK TO DEPLOYED GITHUB
+DEPLOYED URL
 [Screenshot of application](/images/screenshot-app.png)
