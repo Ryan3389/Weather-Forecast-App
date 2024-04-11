@@ -1,0 +1,29 @@
+/*CSS RESET*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background-color: rgba(22, 7, 65, 0.4);
+    --font-color: black;
+    --secondary-font-color: whitesmoke
+}
+
+body {
+    /* background-image: url('/images/background.jpg'); */
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(../images/background.jpg);
+}
+
+/*HEADER*/
+
+header {
+    /* background-color: rgba(22, 7, 65, 0.713); */
+    background-color: rgba(22, 7, 65, 0.7);
+
+    text-align: center;
+    color: whitesmoke;
+    padding: 10px 15px;
+    color: var(--secondary-font-color);
+}
