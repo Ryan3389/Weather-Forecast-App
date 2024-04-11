@@ -9,8 +9,38 @@ const btnContainer = document.getElementById('btn-container')
 //api key
 const apiKey = 'a2778a07e9d9a3c87823acbb0ec3a7d3';
 
+let weatherData = [];
+let currentDayWeather = []
+let searchHistoryArr = []
+
 //event listeners
 form.addEventListener('submit', weatherForm);
+
+document.addEventListener('DOMContentLoaded', function () {
+    const storedWeatherData = localStorage.getItem('weatherData');
+    const storedDailyWeather = localStorage.getItem
+        ('currentDayWeather')
+
+    if (storedWeatherData) {
+        weatherData = JSON.parse(storedWeatherData);
+        renderForecast();
+    }
+    if (storedDailyWeather) {
+        currentDayWeather = JSON.parse(storedDailyWeather)
+        renderDailyForecast()
+    }
+
+})
+
+function saveSearchHistory(location) {
+    if (!searchHistoryArr.includes(location)) {
+        searchHistoryArr.push(location)
+    }
+
+
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr))
+}
+
 
 //function to handle form submission
 function weatherForm(e) {
