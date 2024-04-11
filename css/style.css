@@ -12,14 +12,13 @@
 }
 
 body {
-    /* background-image: url('/images/background.jpg'); */
     background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(../images/background.jpg);
 }
 
 /*HEADER*/
 
 header {
-    /* background-color: rgba(22, 7, 65, 0.713); */
+
     background-color: rgba(22, 7, 65, 0.7);
 
     text-align: center;
@@ -39,6 +38,7 @@ main {
     margin: 10px 15px;
 }
 
+/*form plus inputs*/
 form {
     display: flex;
     flex-direction: column;
@@ -64,7 +64,7 @@ form input {
     color: var(--font-color)
 }
 
-/*button styles*/
+/*button and button container styles*/
 .search-btn {
     padding: 8px 16px;
     cursor: pointer;
@@ -98,6 +98,7 @@ form input {
 
 }
 
+/*typography*/
 .city-weather-info h1 {
     font-size: 28px;
 }
@@ -107,7 +108,7 @@ form input {
     margin: 10px;
 }
 
-
+/*Styles for weather containers*/
 .forecast-container {
     display: flex;
     justify-content: center;
@@ -115,7 +116,7 @@ form input {
 }
 
 
-
+/*title refers to the following text "5 day weather forecast"*/
 .title {
     padding: 10px 0;
     text-align: center;
@@ -148,8 +149,8 @@ i {
 
 }
 
+/*search history buttons*/
 button {
-    /* background-color: #2D8CCB; */
     background-color: var(--background-color);
     border: none;
     padding: 10px 15px;
