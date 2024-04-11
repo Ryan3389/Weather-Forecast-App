@@ -98,7 +98,7 @@ function clickHistoryBtn(e) {
 }
 //searching weather based on btn clicked
 function searchHistoryLocation(city) {
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
+    const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
 
     fetch(apiUrl).then(function (response) {
         if (response.ok) {
@@ -113,7 +113,7 @@ function searchHistoryLocation(city) {
 
 //convert city input to latitude and longitude
 function locationCoordinates(cityLocation, countryLocation) {
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityLocation},${countryLocation}&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityLocation},${countryLocation}&appid=${apiKey}`;
 
     fetch(apiUrl)
         .then(function (response) {
