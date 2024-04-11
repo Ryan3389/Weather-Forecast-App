@@ -74,3 +74,75 @@ form input {
     margin: 5px 0;
     cursor: pointer;
 }
+
+.city-weather-info {
+    border: 1px solid var(--background-color);
+    border-radius: 10px;
+    width: 75vw;
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--background-color);
+
+}
+
+.city-weather-info h1 {
+    font-size: 28px;
+}
+
+.city-weather-info p {
+    font-size: 18px;
+    margin: 10px;
+}
+
+
+.forecast-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+
+
+.title {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.weather-box {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    margin: 5px;
+    padding: 10px;
+    width: 190px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin: 0 20px;
+}
+
+.weather-box p,
+h3 {
+    margin: 15px;
+}
+
+i {
+    margin: 10px 5px;
+
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+button {
+    /* background-color: #2D8CCB; */
+    background-color: var(--background-color);
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+
+}
