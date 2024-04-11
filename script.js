@@ -82,6 +82,7 @@ function getLocationWeather(lat, lon) {
                     localStorage.setItem('weatherData', JSON.stringify(weatherData));
                     localStorage.setItem('currentDayWeather', JSON.stringify(currentDayWeather))
 
+                    renderForecast()
                     renderDailyForecast()
                 });
             }
@@ -126,4 +127,60 @@ function renderDailyForecast() {
     }
 
 
+}
+
+function renderForecast() {
+    // Clear previous content in forecastContainer
+    forecastContainer.innerHTML = '';
+
+    for (let weather of weatherData) {
+        const weatherDiv = document.createElement('div');
+        weatherDiv.classList.add('weather-box');
+
+        const dateEl = document.createElement('h3');
+        dateEl.textContent = weather.date;
+
+        const tempPara = document.createElement('p');
+        tempPara.textContent = `Temp: ${weather.temp} degrees, C`;
+
+        const windPara = document.createElement('p');
+        windPara.textContent = `Wind: ${weather.wind} KPH`;
+
+        const humidPara = document.createElement('p');
+        humidPara.textContent = `Humidity: ${weather.humidity}%`;
+
+        //This was originally my idea, i had help with errors
+        if (weather.desc === 'Clouds') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const cloudIcon = document.createElement('i');
+            cloudIcon.className = 'fas fa-cloud fa-2x';
+
+            iconDiv.append(cloudIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+
+        } else if (weather.desc === 'Rain') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const rainIcon = document.createElement('i');
+            rainIcon.className = 'fas fa-raindrops fa-2x';
+
+            iconDiv.append(rainIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+        } else if (weather.desc === 'Clear') {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('icon-container')
+            const sunIcon = document.createElement('i');
+            sunIcon.className = 'fas fa-sun fa-2x';
+
+            iconDiv.append(sunIcon)
+            forecastContainer.append(weatherDiv);
+            weatherDiv.append(dateEl, iconDiv, tempPara, windPara, humidPara);
+        }
+
+
+
+    }
 }
