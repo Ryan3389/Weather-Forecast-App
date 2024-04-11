@@ -21,9 +21,56 @@ body {
 header {
     /* background-color: rgba(22, 7, 65, 0.713); */
     background-color: rgba(22, 7, 65, 0.7);
-
     text-align: center;
     color: whitesmoke;
     padding: 10px 15px;
     color: var(--secondary-font-color);
+}
+
+.search-city-container {
+    width: 20vw;
+    margin: 10px 15px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 4px solid rgba(128, 128, 128, 0.478);
+    padding-bottom: 10px;
+}
+
+form .search-label {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+form .search-input {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+form input {
+    background-color: rgba(22, 7, 65, 0);
+    color: var(--font-color)
+}
+
+/*button styles*/
+.search-btn {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.city-btn-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.city-btn-container .city-btn {
+    padding: 8px 16px;
+    margin: 5px 0;
+    cursor: pointer;
 }

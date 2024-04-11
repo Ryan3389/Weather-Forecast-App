@@ -12,6 +12,18 @@
     <header class="header">
         <h1>Weather Dashboard</h1>
     </header>
+    <aside class="search-city-container">
+        <form class="form">
+            <label for="search" class="search-label">Search for a City</label>
+            <input type="text" id="search" name="search" aria-label="search" class="search-input" placeholder="City"
+                autocomplete="off">
+            <input type="text" id="country" name="country" aria-label="country" class="search-input"
+                placeholder="Country" autocomplete="off">
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+
+        <section class="city-btn-container" id="btn-container"></section>
+    </aside>
     <script src="script.js"></script>
 </body>
 
