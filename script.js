@@ -43,3 +43,47 @@ function locationCoordinates(cityLocation, countryLocation) {
             }
         });
 }
+
+function getLocationWeather(lat, lon) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+
+                    const dailyForecast = data.list.filter(function (item) {
+                        return item.dt_txt.includes('12:00:00')
+                    })
+                    const dailyWeather = [data]
+                    //daily forecast
+                    currentDayWeather = dailyWeather.map(function (item) {
+                        return {
+                            city: item.city.name,
+                            date: item.list[0].dt_txt.split(' ')[0],
+                            desc: item.list[0].weather[0].main,
+                            temp: Math.floor(item.list[0].main.temp),
+                            wind: Math.floor(item.list[0].wind.speed),
+                            humidity: item.list[0].main.humidity
+                        }
+                    })
+
+                    //5 day forecast
+                    weatherData = dailyForecast.map(forecast => ({
+                        date: forecast.dt_txt.split(' ')[0],
+                        desc: forecast.weather[0].main,
+                        temp: Math.floor(forecast.main.temp),
+                        wind: Math.floor(forecast.wind.speed),
+                        humidity: forecast.main.humidity
+                    }));
+
+
+
+                    localStorage.setItem('weatherData', JSON.stringify(weatherData));
+                    localStorage.setItem('currentDayWeather', JSON.stringify(currentDayWeather))
+
+                    //CALL FUNCTIONS TO RENDER WEATHER FORECAST
+                });
+            }
+        });
+}
