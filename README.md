@@ -1,7 +1,7 @@
 # Weather-Forecast-App
 
 ## Description
-This is an application that uses Open Weather API to retrieve weather data, allowing users to see the current and future weather forecast for any city they choose.
+This is an app that uses Open Weather's api to search for current, and future weather data in your area. Simply submit a location, and the app will render out the current, or future weather forecast. 
 
 
 ## Images
