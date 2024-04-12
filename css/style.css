@@ -12,7 +12,8 @@
 }
 
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(../images/background.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../images/background.jpg);
+    background-size: cover;
 }
 
 /*HEADER*/
@@ -26,6 +27,8 @@ header {
     padding: 10px 15px;
     color: var(--font-color)
 }
+
+
 
 /*MAIN*/
 main {
