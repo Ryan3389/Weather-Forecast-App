@@ -6,22 +6,24 @@
 }
 
 :root {
-    --background-color: rgba(22, 7, 65, 0.6);
+    /* --background-color: rgba(22, 7, 65, 0.6); */
+    --background-color: #2C3E50;
+    /* --font-color: whitesmoke; */
     --font-color: whitesmoke;
 
 }
 
-body {
+/* body {
     background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../images/background.jpg);
     background-size: cover;
-}
+} */
 
 /*HEADER*/
 
 header {
 
-    background-color: rgba(22, 7, 65, 0.7);
-
+    /* background-color: rgba(22, 7, 65, 0.7); */
+    background-color: #304FA0;
     text-align: center;
     color: whitesmoke;
     padding: 10px 15px;
@@ -30,9 +32,14 @@ header {
 
 
 
+
 /*MAIN*/
 main {
     display: flex;
+    background-color: #F8F9FA;
+    height: 90vh;
+    /*ADDED COLOR HERE*/
+
 }
 
 /*ASIDE - form + search btn container*/
@@ -94,11 +101,11 @@ form input {
     width: 75vw;
     margin: 10px 0;
     padding: 15px;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: var(--background-color);
-    color: var(--font-color);
+    align-items: center; */
+    /* background-color: var(--background-color); */
+
 
 }
 
